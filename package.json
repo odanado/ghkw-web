@@ -27,6 +27,7 @@
     "firebase-tools": "^6.2.2",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
+    "tailwindcss": "^0.7.3",
     "typescript": "^3.0.0",
     "vue-template-compiler": "^2.5.17"
   }
