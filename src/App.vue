@@ -1,30 +1,25 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <a @click="signIn">signIn</a>
     <div class="text-red-dark">aaa</div>
   </div>
 </template>
 
 <script lang="ts">
+import firebase from "firebase";
+
 import { Component, Vue } from "vue-property-decorator";
-import HelloWorld from "./components/HelloWorld.vue";
 
-@Component({
-  components: {
-    HelloWorld
+@Component({})
+export default class App extends Vue {
+  private userCredential?: firebase.auth.UserCredential;
+  async signIn() {
+    const provider = new firebase.auth.GithubAuthProvider();
+    this.userCredential = await firebase.auth().signInWithPopup(provider);
+    console.log(this.userCredential);
   }
-})
-export default class App extends Vue {}
-</script>
-
-<style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  async created() {
+    console.log("poyo");
+  }
 }
-</style>
+</script>
