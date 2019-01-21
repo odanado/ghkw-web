@@ -3,6 +3,9 @@ import firebase from "firebase";
 import App from "./App.vue";
 import "./registerServiceWorker";
 
+import "normalize.css";
+import "./assets/styles/main.css";
+
 Vue.config.productionTip = false;
 
 firebase.initializeApp({

@@ -1,8 +1,10 @@
 <template>
-  <div id="app">
+  <div id="app" class="max-w-md mx-auto py-8">
+    <div class="flex shadow-md rounded py-2 px-4">
+      <keyword-input class="sm:flex-grow"/>
+      <a @click="search" class>search</a>
+    </div>
     <a @click="signIn">signIn</a>
-    <a @click="search">search</a>
-    <div class="text-red-dark">{{ accessToken }}</div>
   </div>
 </template>
 
@@ -12,7 +14,13 @@ import Octokit from "@octokit/rest";
 
 import { Component, Vue } from "vue-property-decorator";
 
-@Component({})
+import KeywordInput from "./components/KeywordInput.vue";
+
+@Component({
+  components: {
+    KeywordInput
+  }
+})
 export default class App extends Vue {
   private userCredential?: firebase.auth.UserCredential;
   private accessToken?: string;
@@ -22,7 +30,7 @@ export default class App extends Vue {
     this.userCredential = await firebase.auth().signInWithPopup(provider);
 
     if (this.userCredential) {
-      // XX
+      // XXXX
       this.accessToken = (this.userCredential.credential as any).accessToken;
       this.octokit = new Octokit();
       this.octokit.authenticate({
