@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="max-w-md mx-auto py-8">
+  <div id="app" class="font-sans max-w-md mx-auto py-8">
     <div class="flex shadow-md rounded py-2 px-4">
       <keyword-input class="sm:flex-grow"/>
       <a @click="search" class>search</a>

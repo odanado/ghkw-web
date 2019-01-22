@@ -1,5 +1,7 @@
 import Vue from "vue";
 import firebase from "firebase";
+import WebFont from "webfontloader";
+
 import App from "./App.vue";
 import "./registerServiceWorker";
 
@@ -15,6 +17,12 @@ firebase.initializeApp({
   projectId: "ghkw-web",
   storageBucket: "ghkw-web.appspot.com",
   messagingSenderId: "29147635491"
+});
+
+WebFont.load({
+  google: {
+    families: ["Noto+Sans+JP"]
+  }
 });
 
 new Vue({
