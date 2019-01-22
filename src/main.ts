@@ -1,6 +1,7 @@
 import Vue from "vue";
 import firebase from "firebase";
 import WebFont from "webfontloader";
+import "@fortawesome/fontawesome-free/js/all";
 
 import App from "./App.vue";
 import "./registerServiceWorker";

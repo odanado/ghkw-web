@@ -1,9 +1,10 @@
 <template>
   <div id="app" class="font-sans max-w-md mx-auto py-8">
-    <div class="flex shadow-md rounded py-2 px-4">
+    <div class="w-full flex shadow-md rounded py-2 px-4">
       <keyword-input class="sm:flex-grow"/>
-      <a @click="search" class>search</a>
+      <search-button @onClick="poyo"/>
     </div>
+    <a @click="search" class>search</a>
     <a @click="signIn">signIn</a>
   </div>
 </template>
@@ -15,16 +16,21 @@ import Octokit from "@octokit/rest";
 import { Component, Vue } from "vue-property-decorator";
 
 import KeywordInput from "./components/KeywordInput.vue";
+import SearchButton from "./components/SearchButton.vue";
 
 @Component({
   components: {
-    KeywordInput
+    KeywordInput,
+    SearchButton
   }
 })
 export default class App extends Vue {
   private userCredential?: firebase.auth.UserCredential;
   private accessToken?: string;
   private octokit?: Octokit;
+  poyo() {
+    console.log("poyo");
+  }
   async signIn() {
     const provider = new firebase.auth.GithubAuthProvider();
     this.userCredential = await firebase.auth().signInWithPopup(provider);
