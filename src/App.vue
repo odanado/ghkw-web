@@ -1,13 +1,12 @@
 <template>
   <div id="app" class="font-sans container mx-auto py-8">
     <div class="flex shadow-md rounded py-2 px-4">
-      <keyword-input class="w-full sm:flex-grow"/>
-      <search-button @onClick="poyo"/>
+      <keyword-input class="w-full sm:flex-grow" />
+      <search-button @onClick="poyo" />
     </div>
-    <sign-in-button @onClick="signIn" class="w-1/2"/>
-    <br>
-    <a @click="search" class>search</a>
-    <a @click="signIn">signIn</a>
+    <sign-in-button @onClick="signIn" class="w-1/2" />
+    <br />
+    <a @click="search" class>search</a> <a @click="signIn">signIn</a>
   </div>
 </template>
 

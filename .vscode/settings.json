@@ -1,4 +1,9 @@
 {
-  "editor.formatOnSave": true,
-  "eslint.validate": ["javascript", { "autoFix": false, "language": "vue" }]
+  "editor.formatOnSave": false,
+  "eslint.validate": [
+    { "autoFix": true, "language": "javascript" },
+    { "autoFix": true, "language": "vue" }
+  ],
+  "eslint.autoFixOnSave": true,
+  "prettier.eslintIntegration": true
 }

@@ -1,10 +1,14 @@
 <template>
-  <a @click="onClick" class="flex items-center h-8 text-white bg-black rounded hover:opacity-75">
+  <a
+    @click="onClick"
+    class="flex items-center h-10 text-white bg-black rounded cursor-pointer hover:opacity-75"
+  >
     <i class="h-full ml-2 text-center fab fa-github fa-lg"></i>
-    <span class="flex items-center h-full ml-2 pl-2 border-l">Sign in with GitHub</span>
+    <span class="flex items-center h-full ml-2 pl-2 border-l select-none"
+      >Sign in with GitHub</span
+    >
   </a>
 </template>
-
 
 <script lang="ts">
 import { Component, Vue, Emit } from "vue-property-decorator";
