@@ -1,9 +1,11 @@
 <template>
-  <div id="app" class="font-sans max-w-md mx-auto py-8">
-    <div class="w-full flex shadow-md rounded py-2 px-4">
-      <keyword-input class="sm:flex-grow"/>
+  <div id="app" class="font-sans container mx-auto py-8">
+    <div class="flex shadow-md rounded py-2 px-4">
+      <keyword-input class="w-full sm:flex-grow"/>
       <search-button @onClick="poyo"/>
     </div>
+    <sign-in-button @onClick="signIn" class="w-1/2"/>
+    <br>
     <a @click="search" class>search</a>
     <a @click="signIn">signIn</a>
   </div>
@@ -17,11 +19,13 @@ import { Component, Vue } from "vue-property-decorator";
 
 import KeywordInput from "./components/KeywordInput.vue";
 import SearchButton from "./components/SearchButton.vue";
+import SignInButton from "./components/SignInButton.vue";
 
 @Component({
   components: {
     KeywordInput,
-    SearchButton
+    SearchButton,
+    SignInButton
   }
 })
 export default class App extends Vue {
