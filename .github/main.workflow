@@ -1,6 +1,9 @@
 workflow "Build and Lint on push" {
   on = "push"
-  resolves = ["Lint"]
+  resolves = [
+    "docker://node:10",
+    "Build",
+  ]
 }
 
 action "Install" {
@@ -14,8 +17,8 @@ action "Build" {
   args = "yarn build"
 }
 
-action "Lint" {
+action "docker://node:10" {
   uses = "docker://node:10"
-  needs = ["Build"]
+  needs = ["Install"]
   args = "yarn lint"
 }
