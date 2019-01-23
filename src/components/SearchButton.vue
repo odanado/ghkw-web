@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Emit } from "vue-property-decorator"
+import { Component, Vue, Emit } from "vue-property-decorator";
 
 @Component({})
 export default class App extends Vue {

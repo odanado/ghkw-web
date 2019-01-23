@@ -1,5 +1,4 @@
 {
   "jsxBracketSameLine": true,
-  "semi": false,
-  "parser": "vue"
+  "semi": true
 }
