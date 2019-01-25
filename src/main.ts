@@ -1,13 +1,16 @@
 import Vue from "vue";
+
 import firebase from "firebase";
 import WebFont from "webfontloader";
 import "@fortawesome/fontawesome-free/js/all";
 
 import App from "./App.vue";
+import router from "./router";
 import "./registerServiceWorker";
 
 import "normalize.css";
 import "./assets/styles/main.css";
+import store from "./store";
 
 Vue.config.productionTip = false;
 
@@ -27,5 +30,7 @@ WebFont.load({
 });
 
 new Vue({
-  render: h => h(App)
+  render: h => h(App),
+  store,
+  router
 }).$mount("#app");
