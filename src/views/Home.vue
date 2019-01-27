@@ -1,9 +1,13 @@
 <template>
-  <div id="app" class="font-sans container mx-auto mt-8">
+  <div id="app" class="font-sans container mx-auto mt-4">
     <div class="flex shadow-md rounded py-2 px-4">
-      <keyword-input class="w-full sm:flex-grow" />
+      <keyword-input
+        class="w-full sm:flex-grow"
+        @updateKeyword="updateKeyword"
+      />
       <search-button @onClick="search" />
     </div>
+    <result :data="results" class="my-6" />
   </div>
 </template>
 
@@ -17,17 +21,21 @@ import store from "@/store";
 import KeywordInput from "@/components/KeywordInput.vue";
 import SearchButton from "@/components/SearchButton.vue";
 import SignInButton from "@/components/SignInButton.vue";
+import Result from "@/components/Result.vue";
 
 @Component({
   components: {
     KeywordInput,
     SearchButton,
-    SignInButton
+    SignInButton,
+    Result
   }
 })
-export default class App extends Vue {
+export default class Home extends Vue {
   private accessToken?: string;
   private octokit?: Octokit;
+  private results = [];
+  private keyword: string = "";
   poyo() {
     console.log("poyo");
   }
@@ -42,12 +50,17 @@ export default class App extends Vue {
       token: store.state.accessToken!
     });
   }
+  updateKeyword(keyword: string) {
+    this.keyword = keyword;
+  }
   async search() {
-    const result = await this.octokit!.search.code({
-      q: "exclude_condition"
-    });
+    this.$store.commit("clearKeywords");
+    this.keyword
+      .split(" ")
+      .map(keyword => this.$store.commit("addKeyword", { keyword }));
+    const results = await this.$store.dispatch("search");
 
-    console.log(result);
+    this.results = results;
   }
 }
 </script>
