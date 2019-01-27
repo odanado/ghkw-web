@@ -56,6 +56,7 @@ export default class Home extends Vue {
   async search() {
     this.$store.commit("clearKeywords");
     this.keyword
+      .trim()
       .split(" ")
       .map(keyword => this.$store.commit("addKeyword", { keyword }));
     const results = await this.$store.dispatch("search");
