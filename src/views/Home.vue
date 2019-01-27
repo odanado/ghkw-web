@@ -1,12 +1,9 @@
 <template>
-  <div id="app" class="font-sans container mx-auto py-8">
+  <div id="app" class="font-sans container mx-auto mt-8">
     <div class="flex shadow-md rounded py-2 px-4">
       <keyword-input class="w-full sm:flex-grow" />
-      <search-button @onClick="poyo" />
+      <search-button @onClick="search" />
     </div>
-    <br />
-    <a @click="signOut">signOut</a> <br />
-    <a @click="search" class>search</a>
   </div>
 </template>
 
