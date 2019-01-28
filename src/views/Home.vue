@@ -2,7 +2,7 @@
   <div id="app" class="font-sans container mx-auto mt-4">
     <div class="flex shadow-md rounded py-2 px-4">
       <keyword-input class="w-full sm:flex-grow" :keyword.sync="keyword" />
-      <search-button @onClick="search" />
+      <search-button @onClick="search" class="ml-3" />
     </div>
     <result :data="results" class="my-6" />
   </div>

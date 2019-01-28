@@ -1,7 +1,7 @@
 <template>
   <a
     @click="onClick()"
-    class="flex items-center justify-center pl-3 text-blue-dark cursor-pointer hover:text-blue"
+    class="flex items-center justify-center text-blue-dark cursor-pointer hover:text-blue"
   >
     <i class="fas fa-search fa-lg"></i>
   </a>
