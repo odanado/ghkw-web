@@ -1,6 +1,7 @@
 <template>
   <input
-    @input="$emit('update:keyword', $event.target.value)"
+    @input="updateKeyword"
+    @keyup.enter="onEnter"
     :value="keyword"
     type="text"
     placeholder="検索"
@@ -20,5 +21,7 @@ export default class KeywordInput extends Vue {
     // XXXX
     return event.target.value;
   }
+  @Emit("onEnter")
+  onEnter() {}
 }
 </script>
