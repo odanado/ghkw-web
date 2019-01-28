@@ -2,7 +2,6 @@ import Vue from "vue";
 
 import firebase from "firebase";
 import WebFont from "webfontloader";
-import "@fortawesome/fontawesome-free/js/all";
 
 import App from "./App.vue";
 import router from "./router";
@@ -10,6 +9,8 @@ import "./registerServiceWorker";
 
 import "normalize.css";
 import "./assets/styles/main.css";
+import "@fortawesome/fontawesome-free/css/all.css";
+
 import store from "./store";
 
 Vue.config.productionTip = false;
@@ -26,7 +27,13 @@ firebase.initializeApp({
 WebFont.load({
   google: {
     families: ["Noto+Sans+JP"]
-  }
+  },
+  loading: () =>
+    store.commit("setIsWebFontLoading", { isWebFontLoading: true }),
+  active: () =>
+    store.commit("setIsWebFontLoading", { isWebFontLoading: false }),
+  inactive: () =>
+    store.commit("setIsWebFontLoading", { isWebFontLoading: false })
 });
 
 new Vue({

@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { Component, Vue, Emit, Prop } from "vue-property-decorator";
-Vue.set;
+
 @Component({})
 export default class KeywordInput extends Vue {
   @Prop({ type: String, default: "" }) keyword!: string;

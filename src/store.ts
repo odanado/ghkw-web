@@ -11,6 +11,7 @@ const octokit = new Octokit();
 
 export default new Vuex.Store({
   state: {
+    isWebFontLoading: true,
     accessToken: null,
     keywords: [] as Array<string>
   },
@@ -20,6 +21,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    setIsWebFontLoading(state, { isWebFontLoading }) {
+      state.isWebFontLoading = isWebFontLoading;
+    },
     setAccessToken(state, { accessToken }) {
       state.accessToken = accessToken;
     },
