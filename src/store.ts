@@ -31,10 +31,13 @@ export default new Vuex.Store({
     },
     clearKeywords(state) {
       state.keywords = [];
+    },
+    setKeywords(state, { keyword }: { keyword: string }) {
+      state.keywords = keyword.trim().split(" ");
     }
   },
   actions: {
-    init(context) {
+    loadAccessToken(context) {
       const accessToken = localStorage.getItem("accessToken");
       if (accessToken) {
         context.dispatch("setAccessToken", { accessToken });

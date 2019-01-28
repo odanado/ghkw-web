@@ -38,6 +38,7 @@ export default class App extends Vue {
     }
   }
   async created() {
+    console.log("sign in");
     if (this.$store.getters.isSignIn) {
       this.$router.replace({ path: "/" });
     }

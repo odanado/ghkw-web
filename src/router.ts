@@ -8,6 +8,7 @@ import SignIn from "@/views/SignIn.vue";
 Vue.use(VueRouter);
 
 const requiresAuth: NavigationGuard = (_, __, next) => {
+  store.dispatch("loadAccessToken");
   if (store.getters.isSignIn) {
     next();
   } else {
@@ -17,6 +18,7 @@ const requiresAuth: NavigationGuard = (_, __, next) => {
 };
 
 const signInPage: NavigationGuard = (_, __, next) => {
+  store.dispatch("loadAccessToken");
   if (store.getters.isSignIn) {
     next({ path: "/" });
   } else {
