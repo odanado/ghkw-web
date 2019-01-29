@@ -1,4 +1,5 @@
 import Vue from "vue";
+const VueAnalytics = require("vue-analytics");
 
 import firebase from "firebase";
 import WebFont from "webfontloader";
@@ -34,6 +35,11 @@ WebFont.load({
     store.commit("setIsWebFontLoading", { isWebFontLoading: false }),
   inactive: () =>
     store.commit("setIsWebFontLoading", { isWebFontLoading: false })
+});
+
+Vue.use(VueAnalytics, {
+  id: "UA-49269757-16",
+  router
 });
 
 new Vue({
