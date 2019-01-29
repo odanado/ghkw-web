@@ -4,7 +4,7 @@
     @keyup.enter="onEnter"
     :value="keyword"
     type="text"
-    placeholder="検索"
+    placeholder="検索 (単語はスペース区切り)"
     class="py-2s leading-normal border-transparent bg-grey-lighter focus:outline-none hover:border-grey-lighter hover:bg-white text-black border border-transparent rounded"
   />
 </template>
