@@ -1,5 +1,6 @@
 {
   "name": "ghkw-web",
+  "description": "ghkw-webはGitHub上のソースコードで使用されているキーワード数を数えるWebサービスです。",
   "version": "0.1.0",
   "private": true,
   "scripts": {

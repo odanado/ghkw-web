@@ -5,7 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>ghkw-web</title>
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <meta data-n-head="true" data-hid="description" content="<%= htmlWebpackPlugin.options.description %>" name="description">
+
+    <meta data-n-head="true" data-hid="og:title" content="<%= htmlWebpackPlugin.options.title %>" property="og:title">
+    <meta data-n-head="true" data-hid="og:description" content="<%= htmlWebpackPlugin.options.description %>" property="og:description">
+    <meta data-n-head="true" data-hid="og:type" content="website" property="og:type">
+    <meta data-n-head="true" data-hid="og:url" content="<%= htmlWebpackPlugin.options.origin %>" property="og:url">
+    <meta data-n-head="true" data-hid="og:image" content="<%= htmlWebpackPlugin.options.origin %>/img/icons/android-chrome-512x512.png" property="og:image">
+
+    <meta data-n-head="true" data-hid="twitter:card" content="summary" name="twitter:card">
   </head>
   <body>
     <noscript>
