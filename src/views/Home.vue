@@ -18,7 +18,7 @@ import Octokit from "@octokit/rest";
 
 import { Component, Vue, Watch } from "vue-property-decorator";
 
-import store from "@/store";
+import store, { rootModule } from "@/store";
 import KeywordInput from "@/components/KeywordInput.vue";
 import SearchButton from "@/components/SearchButton.vue";
 import SignInButton from "@/components/SignInButton.vue";
@@ -37,27 +37,27 @@ export default class Home extends Vue {
   private octokit?: Octokit;
   private results = [];
   private keyword: string = "";
+  private context = rootModule.context(store);
 
   async signOut() {
-    await store.dispatch("signOut");
+    await this.context.dispatch("signOut", undefined);
     this.$router.push({ path: "/sign-in" });
   }
   async created() {
-    this.octokit = new Octokit();
-    this.octokit.authenticate({
-      type: "token",
-      token: store.state.accessToken!
+    this.context.dispatch("setupAuthenticate", {
+      accessToken: this.context.state.accessToken!
     });
 
     if (this.$route.query.q) {
       this.keyword = this.$route.query.q as string;
+      this.context.commit("setKeywords", { keyword: this.keyword });
       this.search();
     }
   }
   async search() {
-    this.$store.commit("setKeywords", { keyword: this.keyword });
+    this.context.commit("setKeywords", { keyword: this.keyword });
 
-    const results = await this.$store.dispatch("search");
+    const results = await this.context.dispatch("search", undefined);
 
     this.results = results;
   }
