@@ -12,7 +12,6 @@ const requiresAuth: NavigationGuard = (_, __, next) => {
   if (store.getters.isSignIn) {
     next();
   } else {
-    console.log("not sign in");
     next({ path: "/sign-in" });
   }
 };
