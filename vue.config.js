@@ -8,5 +8,11 @@ module.exports = {
       args[0].origin = "https://ghkw-web.firebaseapp.com";
       return args;
     });
+  },
+  pwa: {
+    workboxOptions: {
+      cacheId: "ghkw-web",
+      globPatterns: ["*.{jpg,png,gif,svg,webp,js,css}"]
+    }
   }
 };
