@@ -2,8 +2,8 @@ import Vue from "vue";
 import VueRouter, { RouteConfig, NavigationGuard } from "vue-router";
 
 import store from "@/store";
-import Home from "@/views/Home.vue";
-import SignIn from "@/views/SignIn.vue";
+// import Home from "@/views/Home.vue";
+// import SignIn from "@/views/SignIn.vue";
 
 Vue.use(VueRouter);
 
@@ -27,8 +27,16 @@ const signInPage: NavigationGuard = (_, __, next) => {
 };
 
 const routes: RouteConfig[] = [
-  { path: "/", component: Home, beforeEnter: requiresAuth },
-  { path: "/sign-in", component: SignIn, beforeEnter: signInPage }
+  {
+    path: "/",
+    component: () => import("@/views/Home.vue"),
+    beforeEnter: requiresAuth
+  },
+  {
+    path: "/sign-in",
+    component: () => import("@/views/SignIn.vue"),
+    beforeEnter: signInPage
+  }
 ];
 
 const router = new VueRouter({
