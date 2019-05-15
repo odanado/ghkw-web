@@ -1,0 +1,46 @@
+version: 2.1
+
+defaults: &defaults
+  working_directory: ~/project
+  executor:
+    name: node/default
+    tag: 8.15.1
+
+orbs:
+  node: circleci/node@1.0.1
+
+jobs:
+  install:
+    <<: *defaults
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run:
+                name: Install dependency
+                command: yarn
+          cache-key: yarn.lock
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  audit:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Audit
+          command: yarn audit
+
+workflows:
+  version: 2
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches: { only: [master] }
+    jobs:
+       - install
+       - audit: { requires: [install] }
