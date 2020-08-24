@@ -1,5 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import {
+  Getters,
+  Mutations,
+  Actions,
+  Module,
+  createStore
+} from "vuex-smart-module";
 
 import { orderBy } from "lodash";
 import firebase from "firebase";
@@ -9,82 +16,107 @@ Vue.use(Vuex);
 
 const octokit = new Octokit();
 
-export default new Vuex.Store({
-  state: {
-    isWebFontLoading: true,
-    accessToken: null,
-    keywords: [] as Array<string>
-  },
-  getters: {
-    isSignIn(state) {
-      return state.accessToken !== null;
-    }
-  },
-  mutations: {
-    setIsWebFontLoading(state, { isWebFontLoading }) {
-      state.isWebFontLoading = isWebFontLoading;
-    },
-    setAccessToken(state, { accessToken }) {
-      state.accessToken = accessToken;
-    },
-    clearAccessToken(state) {
-      state.accessToken = null;
-    },
-    addKeyword(state, { keyword }) {
-      state.keywords.push(keyword);
-    },
-    clearKeywords(state) {
-      state.keywords = [];
-    },
-    setKeywords(state, { keyword }: { keyword: string }) {
-      state.keywords = keyword.trim().split(" ");
-    }
-  },
-  actions: {
-    loadAccessToken(context) {
-      const accessToken = localStorage.getItem("accessToken");
-      if (accessToken) {
-        context.dispatch("setAccessToken", { accessToken });
-      }
-    },
-    async signIn() {
-      const provider = new firebase.auth.GithubAuthProvider();
-      await firebase.auth().signInWithRedirect(provider);
-    },
-    setAccessToken(context, { accessToken }) {
-      context.commit("setAccessToken", { accessToken });
-      localStorage.setItem("accessToken", accessToken);
-      context.dispatch("setupAuthenticate", { accessToken });
-    },
-    async signOut(context) {
-      context.commit("clearAccessToken");
-      localStorage.removeItem("accessToken");
-    },
-    setupAuthenticate(_, { accessToken }) {
-      octokit.authenticate({
-        type: "token",
-        token: accessToken
-      });
-    },
-    async search(context) {
-      const promisedResults = context.state.keywords.map(async keyword => {
-        const { data } = await octokit.search.code({
-          q: keyword
-        });
+class State {
+  isWebFontLoading = true;
+  accessToken?: string;
+  keywords: Array<string> = [];
+}
 
-        return {
-          keyword,
-          total: data.total_count as number
-        };
-      });
+class Getter extends Getters<State> {
+  get isSignIn(): boolean {
+    return this.state.accessToken !== undefined;
+  }
+}
 
-      const results = await Promise.all(promisedResults);
-      const orderedResults = orderBy(
-        results,
-        ["total", "keyword"],
-        ["desc", "asc"]
-      ).map((result, index) => ({ rank: index + 1, ...result }));
-      return orderedResults;
+class Mutation extends Mutations<State> {
+  setIsWebFontLoading({ isWebFontLoading }: { isWebFontLoading: boolean }) {
+    this.state.isWebFontLoading = isWebFontLoading;
+  }
+
+  setAccessToken({ accessToken }: { accessToken: string }) {
+    this.state.accessToken = accessToken;
+  }
+
+  clearAccessToken() {
+    this.state.accessToken = undefined;
+  }
+
+  addKeyword({ keyword }: { keyword: string }) {
+    this.state.keywords.push(keyword);
+  }
+
+  clearKeywords() {
+    this.state.keywords = [];
+  }
+
+  setKeywords({ keyword }: { keyword: string }) {
+    this.state.keywords = keyword.trim().split(" ");
+  }
+}
+
+class Action extends Actions<State, Getter, Mutation, Action> {
+  setupAuthenticate({ accessToken }: { accessToken: string }) {
+    octokit.authenticate({
+      type: "token",
+      token: accessToken
+    });
+  }
+
+  setAccessToken({ accessToken }: { accessToken: string }) {
+    this.commit("setAccessToken", { accessToken });
+    localStorage.setItem("accessToken", accessToken);
+    this.dispatch("setupAuthenticate", { accessToken });
+  }
+
+  loadAccessToken() {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      this.dispatch("setAccessToken", { accessToken });
     }
   }
+
+  async signIn() {
+    const provider = new firebase.auth.GithubAuthProvider();
+    await firebase.auth().signInWithRedirect(provider);
+  }
+
+  signOut() {
+    // XXXX: payload?
+    this.commit("clearAccessToken", undefined);
+    localStorage.removeItem("accessToken");
+  }
+
+  async search() {
+    const promisedResults = this.state.keywords.map(async keyword => {
+      const { data } = await octokit.search.code({
+        q: keyword
+      });
+
+      return {
+        keyword,
+        total: data.total_count as number
+      };
+    });
+
+    const results = await Promise.all(promisedResults);
+    const orderedResults = orderBy(
+      results,
+      ["total", "keyword"],
+      ["desc", "asc"]
+    ).map((result, index) => ({ rank: index + 1, ...result }));
+    return orderedResults;
+  }
+}
+
+export const rootModule = new Module({
+  state: State,
+  getters: Getter,
+  mutations: Mutation,
+  actions: Action
 });
+
+const store = createStore(rootModule, {
+  strict: process.env.NODE_ENV !== "production"
+});
+
+export default store;
